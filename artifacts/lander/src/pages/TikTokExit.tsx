@@ -29,12 +29,11 @@ export default function TikTokExit() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* Top content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 pt-12 pb-6">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 py-12">
+      <div className="w-full max-w-sm flex flex-col items-center gap-7">
 
         {/* Card preview */}
-        <div className="relative mb-8">
+        <div className="relative">
           <div className="absolute inset-0 bg-black/10 rounded-3xl blur-xl scale-95 translate-y-3" />
           <img
             src={`${import.meta.env.BASE_URL}apple-cash.png`}
@@ -47,7 +46,7 @@ export default function TikTokExit() {
         </div>
 
         {/* Text */}
-        <div className="text-center mb-6">
+        <div className="text-center">
           <h1 className="text-[28px] font-extrabold text-gray-900 leading-tight tracking-tight">
             Your $750 reward is<br />waiting for you
           </h1>
@@ -57,23 +56,22 @@ export default function TikTokExit() {
         </div>
 
         {/* Reward badge */}
-        <div className="w-full max-w-xs bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 flex items-center gap-3">
+        <div className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 flex items-center gap-3">
           <span className="text-2xl">🎁</span>
           <div>
             <p className="text-gray-900 font-semibold text-sm">$750 Apple Cash</p>
             <p className="text-gray-400 text-xs">Complete simple tasks to claim</p>
           </div>
         </div>
-      </div>
 
-      {/* Sticky bottom CTA */}
-      <div className="sticky bottom-0 w-full bg-white border-t border-gray-100 px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] flex flex-col items-center gap-2">
+        {/* Button */}
         <button
           onClick={handleContinue}
-          className="pulse-btn w-full max-w-sm bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[17px] py-5 rounded-2xl shadow-lg transition-colors"
+          className="pulse-btn w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[17px] py-5 rounded-2xl shadow-lg transition-colors"
         >
           Continue to Claim →
         </button>
+
         <p className="text-xs text-gray-400 text-center">
           To get the full experience and start earning, click continue
         </p>

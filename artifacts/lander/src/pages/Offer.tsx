@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
+import { OFFER_URL } from "@/config";
 
-const OFFER_URL = "https://example.com/offer";
 const COOKIE_KEY = "lander_timer_end";
 
 const FIRST_NAMES = [
@@ -84,20 +84,19 @@ export default function Offer() {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col items-center px-5 pt-0 pb-6">
 
       {/* Timer bar */}
-      <div className="w-full bg-gray-950 text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2">
+      <div className="w-full bg-gray-950 text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2 -mx-5 mb-6" style={{ width: "calc(100% + 2.5rem)" }}>
         <span>⏱</span>
         <span>Offer expires in</span>
         <span className="font-bold tabular-nums text-sky-400 text-[14px]">{formatTime(timeLeft)}</span>
       </div>
 
-      {/* Scrollable body */}
-      <div className="flex-1 flex flex-col items-center px-5 pt-6 pb-36">
+      <div className="w-full max-w-sm flex flex-col items-center gap-6">
 
-        {/* Card — no white container, just shadow + slight bg glow */}
-        <div className="relative w-full max-w-[340px]">
+        {/* Card */}
+        <div className="relative w-full">
           <div className="absolute inset-0 bg-gradient-to-br from-yellow-300/30 via-green-300/20 to-blue-300/30 rounded-[28px] blur-2xl scale-95 translate-y-4" />
           <img
             src={`${import.meta.env.BASE_URL}apple-cash.png`}
@@ -107,7 +106,7 @@ export default function Offer() {
         </div>
 
         {/* Headline */}
-        <div className="mt-7 text-center">
+        <div className="text-center">
           <h1 className="text-[34px] font-extrabold text-gray-900 tracking-tight leading-none">
             $750 Apple Cash
           </h1>
@@ -117,14 +116,14 @@ export default function Offer() {
         </div>
 
         {/* Live badge */}
-        <div className="mt-4 flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-1.5">
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-1.5">
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
           <span className="text-green-700 text-xs font-semibold">Rewards being claimed right now</span>
         </div>
 
         {/* How It Works */}
-        <div className="mt-8 w-full max-w-sm">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-4">How It Works</p>
+        <div className="w-full">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">How It Works</p>
           <div className="flex flex-col gap-3">
             <Step number={1} title="Enter your email address" subtitle="For notifications & to receive rewards" />
             <Step number={2} title="Complete 2–3 simple offers" subtitle="The more you do, the more you earn" />
@@ -132,8 +131,18 @@ export default function Offer() {
           </div>
         </div>
 
+        {/* CTA — inline, bottom of content */}
+        <a
+          href={OFFER_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pulse-btn block w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-colors mt-2"
+        >
+          Claim My $750 Now →
+        </a>
+
         {/* Footer */}
-        <div className="mt-8 w-full max-w-sm border-t border-gray-100 pt-5 text-center">
+        <div className="w-full border-t border-gray-100 pt-4 text-center">
           <p className="text-[11px] text-gray-400 leading-relaxed">
             Not affiliated with Apple Inc., TikTok, or Meta (Facebook/Instagram).<br />Apple Cash is a trademark of Apple Inc.
           </p>
@@ -145,23 +154,11 @@ export default function Offer() {
         </div>
       </div>
 
-      {/* Sticky bottom CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-gray-100 px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        <a
-          href={OFFER_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="pulse-btn block w-full max-w-sm mx-auto bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-colors"
-        >
-          Claim My $750 Now →
-        </a>
-      </div>
-
-      {/* Notification toast — above sticky CTA */}
+      {/* Notification toast */}
       {notif && (
         <div
           key={notif.id}
-          className={`fixed bottom-[88px] left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white border border-gray-200 rounded-2xl shadow-2xl px-4 py-3 flex items-center gap-3 z-50 ${notif.visible ? "notif-enter" : "notif-exit"}`}
+          className={`fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white border border-gray-200 rounded-2xl shadow-2xl px-4 py-3 flex items-center gap-3 z-50 ${notif.visible ? "notif-enter" : "notif-exit"}`}
         >
           <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
             <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
