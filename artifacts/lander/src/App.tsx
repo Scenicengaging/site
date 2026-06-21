@@ -6,11 +6,26 @@ import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import NotFound from "@/pages/not-found";
 
+// ─── Add or remove exit-page slugs here ───────────────────────────────────────
+const EXIT_SLUGS = [
+  "go",
+  "start",
+  "tiktok",
+  "exit",
+];
+// ──────────────────────────────────────────────────────────────────────────────
+
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={TikTokExit} />
-      <Route path="/verify" component={AgeGate} />
+      {/* Default landing page */}
+      <Route path="/" component={AgeGate} />
+
+      {/* Exit / browser-escape page — one route per slug */}
+      {EXIT_SLUGS.map((slug) => (
+        <Route key={slug} path={`/${slug}`} component={TikTokExit} />
+      ))}
+
       <Route path="/offer" component={Offer} />
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
