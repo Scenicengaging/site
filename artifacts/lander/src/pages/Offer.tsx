@@ -121,6 +121,16 @@ export default function Offer() {
           <span className="text-green-700 text-xs font-semibold">Rewards being claimed right now</span>
         </div>
 
+        {/* CTA */}
+        <a
+          href={OFFER_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pulse-btn block w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-colors"
+        >
+          Claim My $750 Now →
+        </a>
+
         {/* How It Works */}
         <div className="w-full">
           <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">How It Works</p>
@@ -130,16 +140,6 @@ export default function Offer() {
             <Step number={3} title="Receive your Apple Pay reward" subtitle="Sent directly to your account" />
           </div>
         </div>
-
-        {/* CTA — inline, bottom of content */}
-        <a
-          href={OFFER_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="pulse-btn block w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-colors mt-2"
-        >
-          Claim My $750 Now →
-        </a>
 
         {/* Footer */}
         <div className="w-full border-t border-gray-100 pt-4 text-center">
