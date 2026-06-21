@@ -27,7 +27,7 @@ export default function AgeGate() {
         <div className="w-full flex flex-col gap-3">
           <button
             onClick={proceed}
-            className="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold text-lg py-5 rounded-2xl shadow-md transition-colors"
+            className="w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-lg py-5 rounded-2xl shadow-md transition-colors"
           >
             Yes, I am 21 or older
           </button>
