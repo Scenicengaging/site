@@ -94,6 +94,8 @@ export default function Offer() {
   const notifIdRef = useRef(0);
   const [spots, setSpots] = useState(0);
   const spotsRef = useRef({ count: 0, nextTick: 0 });
+  const [stickyBtn, setStickyBtn] = useState(false);
+  const mainCtaRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     timerEndRef.current = getTimerEnd();
@@ -122,6 +124,17 @@ export default function Offer() {
       }
     }, 5000);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const el = mainCtaRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setStickyBtn(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
   useEffect(() => {
@@ -201,6 +214,7 @@ export default function Offer() {
 
         {/* CTA */}
         <a
+          ref={mainCtaRef}
           href={OFFER_URL}
           target="_blank"
           rel="noopener noreferrer"
@@ -261,6 +275,25 @@ export default function Offer() {
             <a href={`${lbase}/privacy`} className="hover:underline">Privacy</a>
           </div>
         </div>
+      </div>
+
+      {/* Sticky CTA — appears when main button scrolls out of view */}
+      <div
+        className="fixed bottom-0 left-0 right-0 z-40 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 bg-white/95 backdrop-blur border-t border-gray-100 transition-all duration-300"
+        style={{
+          transform: stickyBtn ? "translateY(0)" : "translateY(110%)",
+          pointerEvents: stickyBtn ? "auto" : "none",
+        }}
+      >
+        <a
+          href={OFFER_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full max-w-sm mx-auto text-white font-bold text-[17px] py-4 rounded-2xl shadow-xl text-center transition-opacity active:opacity-80"
+          style={{ backgroundColor: T.primary }}
+        >
+          {T.ctaText}
+        </a>
       </div>
 
       {/* Notification toast */}
