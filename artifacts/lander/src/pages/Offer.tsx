@@ -2,6 +2,40 @@ import { useEffect, useState, useRef } from "react";
 import { OFFER_URL, T } from "@/config";
 
 const COOKIE_KEY = "lander_timer_end";
+const SPOTS_COOKIE = "lander_spots";
+const SPOTS_TICK_MS = 90_000; // decrement every 90 seconds
+
+function getSpots(): { count: number; nextTick: number } {
+  const raw = document.cookie
+    .split("; ")
+    .find((r) => r.startsWith(`${SPOTS_COOKIE}=`))
+    ?.split("=")[1];
+
+  if (raw) {
+    try {
+      const parsed = JSON.parse(decodeURIComponent(raw));
+      if (typeof parsed.count === "number" && typeof parsed.nextTick === "number") {
+        // Apply any ticks that elapsed while page was closed
+        const now = Date.now();
+        let { count, nextTick } = parsed;
+        while (now >= nextTick && count > 1) {
+          count--;
+          nextTick += SPOTS_TICK_MS;
+        }
+        return { count, nextTick };
+      }
+    } catch {}
+  }
+
+  // First visit — pick a random starting count between 9 and 17
+  const count = Math.floor(Math.random() * 9) + 9;
+  return { count, nextTick: Date.now() + SPOTS_TICK_MS };
+}
+
+function saveSpots(count: number, nextTick: number) {
+  const val = encodeURIComponent(JSON.stringify({ count, nextTick }));
+  document.cookie = `${SPOTS_COOKIE}=${val}; path=/; max-age=${7 * 24 * 3600}`;
+}
 
 const FIRST_NAMES = [
   "Ashley","Brandon","Christina","Derek","Emma","Frank","Grace","Henry",
@@ -58,12 +92,35 @@ export default function Offer() {
   const timerEndRef = useRef(0);
   const [notif, setNotif] = useState<Notif | null>(null);
   const notifIdRef = useRef(0);
+  const [spots, setSpots] = useState(0);
+  const spotsRef = useRef({ count: 0, nextTick: 0 });
 
   useEffect(() => {
     timerEndRef.current = getTimerEnd();
     const tick = () => setTimeLeft(Math.max(0, timerEndRef.current - Date.now()));
     tick();
     const id = setInterval(tick, 500);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const initial = getSpots();
+    spotsRef.current = initial;
+    setSpots(initial.count);
+    saveSpots(initial.count, initial.nextTick);
+
+    const id = setInterval(() => {
+      const now = Date.now();
+      if (now >= spotsRef.current.nextTick && spotsRef.current.count > 1) {
+        const next = {
+          count: spotsRef.current.count - 1,
+          nextTick: spotsRef.current.nextTick + SPOTS_TICK_MS,
+        };
+        spotsRef.current = next;
+        setSpots(next.count);
+        saveSpots(next.count, next.nextTick);
+      }
+    }, 5000);
     return () => clearInterval(id);
   }, []);
 
@@ -172,11 +229,21 @@ export default function Offer() {
         >
           <div className="flex items-start gap-3">
             <span className="text-xl mt-0.5">⚠️</span>
-            <div>
-              <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>
-                Limited spots remaining
-              </p>
-              <p className="text-gray-500 text-[13px] mt-0.5 leading-snug">
+            <div className="flex-1">
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>
+                  Limited spots remaining
+                </p>
+                {spots > 0 && (
+                  <span
+                    className="text-white text-[12px] font-extrabold px-2.5 py-0.5 rounded-full tabular-nums"
+                    style={{ backgroundColor: T.badgeDot }}
+                  >
+                    Only {spots} left
+                  </span>
+                )}
+              </div>
+              <p className="text-gray-500 text-[13px] mt-1 leading-snug">
                 Complete 2 quick steps after sign in to lock in your bonus reward before it expires.
               </p>
             </div>
