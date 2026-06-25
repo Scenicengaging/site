@@ -386,36 +386,42 @@ export default function Offer() {
             </div>
           </div>
 
-          {/* Tier labels */}
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            {[
-              { label: "Free only", spend: 0, earn: 50 },
-              { label: "Moderate", spend: 100, earn: 400 },
-              { label: "Max reward", spend: 200, earn: 750 },
-            ].map((tier) => (
-              <button
-                key={tier.spend}
-                onClick={() => setSpendAmount(tier.spend)}
-                className="rounded-xl py-2 px-1 text-center border transition-all text-[11px]"
-                style={
-                  spendAmount === tier.spend
-                    ? { backgroundColor: T.primary, borderColor: T.primary, color: "#fff" }
-                    : { backgroundColor: "#fff", borderColor: "#e5e7eb", color: "#6b7280" }
-                }
-              >
-                <span className="block font-bold">${tier.earn}</span>
-                <span className="block">{tier.label}</span>
-              </button>
+        </div>
+
+        {/* FAQ */}
+        <div className="w-full">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">Frequently Asked Questions</p>
+          <div className="flex flex-col gap-2">
+            {FAQS.map((faq, i) => (
+              <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden">
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left bg-gray-50 active:bg-gray-100 transition-colors"
+                >
+                  <span className="font-semibold text-[14px] text-gray-800 leading-snug">{faq.q}</span>
+                  <span
+                    className="text-gray-400 text-[20px] font-light flex-shrink-0 transition-transform duration-200 leading-none"
+                    style={{ transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)" }}
+                  >
+                    +
+                  </span>
+                </button>
+                {openFaq === i && (
+                  <div className="px-5 pb-5 pt-2 bg-white">
+                    <p className="text-[13px] text-gray-500 leading-relaxed">{faq.a}</p>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Spots remaining */}
+        {/* Spots remaining — below FAQ */}
         <div className="w-full rounded-2xl px-5 py-4 border" style={{ backgroundColor: T.spotsBg, borderColor: T.spotsBorder }}>
           <div className="flex items-start gap-3">
             <span className="text-xl mt-0.5">⚠️</span>
             <div className="flex-1">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
                 <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>Limited spots remaining</p>
                 {spots > 0 && (
                   <span className="text-white text-[12px] font-extrabold px-2.5 py-0.5 rounded-full tabular-nums" style={{ backgroundColor: T.badgeDot }}>
@@ -427,34 +433,6 @@ export default function Offer() {
                 Complete 2 quick steps after sign in to lock in your bonus reward before it expires.
               </p>
             </div>
-          </div>
-        </div>
-
-        {/* FAQ */}
-        <div className="w-full">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">Frequently Asked Questions</p>
-          <div className="flex flex-col gap-2">
-            {FAQS.map((faq, i) => (
-              <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-3 px-4 py-4 text-left bg-gray-50 hover:bg-gray-100 transition-colors"
-                >
-                  <span className="font-semibold text-[14px] text-gray-800">{faq.q}</span>
-                  <span
-                    className="text-gray-400 text-[18px] flex-shrink-0 transition-transform duration-200"
-                    style={{ transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)" }}
-                  >
-                    +
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <div className="px-4 pb-4 pt-2 bg-white">
-                    <p className="text-[13px] text-gray-500 leading-relaxed">{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            ))}
           </div>
         </div>
 
