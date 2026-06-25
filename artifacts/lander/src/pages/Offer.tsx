@@ -173,7 +173,9 @@ export default function Offer() {
 
         {/* Hero image */}
         <div className="relative w-full">
-          <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-[28px] blur-2xl scale-95 translate-y-4`} />
+          {!T.heroWhiteBg && (
+            <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-[28px] blur-2xl scale-95 translate-y-4`} />
+          )}
           {T.heroWhiteBg ? (
             <div className="relative bg-white rounded-[22px] shadow-2xl p-8 flex items-center justify-center">
               <img

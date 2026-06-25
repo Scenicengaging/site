@@ -38,7 +38,9 @@ export default function TikTokExit() {
 
         {/* Hero image */}
         <div className="relative">
-          <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-3xl blur-xl scale-95 translate-y-3`} />
+          {!T.heroWhiteBg && (
+            <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-3xl blur-xl scale-95 translate-y-3`} />
+          )}
           <div className={T.heroWhiteBg ? "relative bg-white rounded-3xl shadow-2xl p-6 w-64 max-w-[80vw] flex items-center justify-center" : "relative"}>
             <img
               src={`${base}${T.heroImage}`}
