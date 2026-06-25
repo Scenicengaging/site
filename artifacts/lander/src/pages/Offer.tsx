@@ -125,7 +125,7 @@ const FAQS = [
   },
   {
     q: "What tasks do I need to complete?",
-    a: "After signing up you'll complete 2–3 simple sponsored offers — such as free trials, short surveys, or app downloads. Each one takes only a few minutes.",
+    a: "After signing up you'll complete sponsored offers — such as free trials, surveys, or app downloads. The more offers you complete, the more you earn. Free offers get you started, but completing paid deals unlocks bigger rewards faster. Spending up to $200 across offers can qualify you for the full $750 reward.",
   },
   {
     q: "Is my personal information safe?",
@@ -148,6 +148,7 @@ export default function Offer() {
   const [stickyBtn, setStickyBtn] = useState(false);
   const [showInterstitial, setShowInterstitial] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [spendAmount, setSpendAmount] = useState(0);
   const mainCtaRef = useRef<HTMLDivElement>(null);
 
   // Timer
@@ -341,6 +342,71 @@ export default function Offer() {
             <Step number={1} title="Enter your email address" subtitle="For notifications & to receive rewards" />
             <Step number={2} title="Complete 2–3 simple offers" subtitle="The more you do, the more you earn" />
             <Step number={3} title="Receive your reward" subtitle="Sent directly to your account" />
+          </div>
+        </div>
+
+        {/* Reward Calculator */}
+        <div className="w-full rounded-2xl border border-gray-100 bg-gray-50 px-5 py-5">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-1">Reward Calculator</p>
+          <p className="text-[12px] text-gray-400 text-center mb-5">Slide to see how much you can earn</p>
+
+          {/* Earn display */}
+          <div className="text-center mb-5">
+            <p className="text-[13px] text-gray-500 mb-0.5">You could earn up to</p>
+            <p className="text-[42px] font-extrabold tabular-nums leading-none" style={{ color: T.primary }}>
+              ${Math.round(50 + (spendAmount / 200) * 700).toLocaleString("en-US")}
+            </p>
+            <p className="text-[12px] text-gray-400 mt-1">
+              {spendAmount === 0
+                ? "completing free offers only"
+                : `by investing $${spendAmount} in sponsored deals`}
+            </p>
+          </div>
+
+          {/* Slider */}
+          <div className="relative">
+            <input
+              type="range"
+              min={0}
+              max={200}
+              step={5}
+              value={spendAmount}
+              onChange={(e) => setSpendAmount(Number(e.target.value))}
+              className="reward-slider w-full h-2 rounded-full appearance-none cursor-pointer"
+              style={{
+                background: `linear-gradient(to right, ${T.primary} 0%, ${T.primary} ${(spendAmount / 200) * 100}%, #e5e7eb ${(spendAmount / 200) * 100}%, #e5e7eb 100%)`,
+              }}
+            />
+            <div className="flex justify-between mt-2 text-[11px] text-gray-400">
+              <span>$0</span>
+              <span>$50</span>
+              <span>$100</span>
+              <span>$150</span>
+              <span>$200</span>
+            </div>
+          </div>
+
+          {/* Tier labels */}
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {[
+              { label: "Free only", spend: 0, earn: 50 },
+              { label: "Moderate", spend: 100, earn: 400 },
+              { label: "Max reward", spend: 200, earn: 750 },
+            ].map((tier) => (
+              <button
+                key={tier.spend}
+                onClick={() => setSpendAmount(tier.spend)}
+                className="rounded-xl py-2 px-1 text-center border transition-all text-[11px]"
+                style={
+                  spendAmount === tier.spend
+                    ? { backgroundColor: T.primary, borderColor: T.primary, color: "#fff" }
+                    : { backgroundColor: "#fff", borderColor: "#e5e7eb", color: "#6b7280" }
+                }
+              >
+                <span className="block font-bold">${tier.earn}</span>
+                <span className="block">{tier.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 

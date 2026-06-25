@@ -76,3 +76,27 @@
   100% { transform: scale(0.99); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 .pulse-btn { animation: pulse-ring 2s infinite; }
+
+/* Reward calculator slider thumb */
+.reward-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid currentColor;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  margin-top: -10px;
+}
+.reward-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid currentColor;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+.reward-slider::-webkit-slider-runnable-track { border-radius: 9999px; }
+.reward-slider::-moz-range-track { border-radius: 9999px; height: 8px; }
