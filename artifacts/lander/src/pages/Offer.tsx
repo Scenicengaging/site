@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { OFFER_URL } from "@/config";
+import { OFFER_URL, T } from "@/config";
 
 const COOKIE_KEY = "lander_timer_end";
 
@@ -81,44 +81,65 @@ export default function Offer() {
     return () => clearInterval(id);
   }, []);
 
-  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const base = import.meta.env.BASE_URL;
+  const lbase = base.replace(/\/$/, "");
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-5 pt-0 pb-6">
+    <div className="min-h-screen bg-white flex flex-col items-center px-5 pt-0 pb-8">
 
       {/* Timer bar */}
-      <div className="w-full bg-gray-950 text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2 -mx-5 mb-6" style={{ width: "calc(100% + 2.5rem)" }}>
+      <div
+        className="w-full text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2 -mx-5 mb-6"
+        style={{ width: "calc(100% + 2.5rem)", backgroundColor: T.timerBg }}
+      >
         <span>⏱</span>
         <span>Offer expires in</span>
-        <span className="font-bold tabular-nums text-sky-400 text-[14px]">{formatTime(timeLeft)}</span>
+        <span className="font-bold tabular-nums text-[14px]" style={{ color: T.timerCountdown }}>
+          {formatTime(timeLeft)}
+        </span>
       </div>
 
       <div className="w-full max-w-sm flex flex-col items-center gap-6">
 
-        {/* Card */}
+        {/* Hero image */}
         <div className="relative w-full">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-300/30 via-green-300/20 to-blue-300/30 rounded-[28px] blur-2xl scale-95 translate-y-4" />
-          <img
-            src={`${import.meta.env.BASE_URL}apple-cash.png`}
-            alt="$750 Apple Cash"
-            className="relative w-full rounded-[22px] shadow-2xl"
-          />
+          <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-[28px] blur-2xl scale-95 translate-y-4`} />
+          {T.heroWhiteBg ? (
+            <div className="relative bg-white rounded-[22px] shadow-2xl p-8 flex items-center justify-center">
+              <img
+                src={`${base}${T.heroImage}`}
+                alt={T.heroAlt}
+                className="w-full h-auto max-h-48 object-contain"
+              />
+            </div>
+          ) : (
+            <img
+              src={`${base}${T.heroImage}`}
+              alt={T.heroAlt}
+              className="relative w-full rounded-[22px] shadow-2xl"
+            />
+          )}
         </div>
 
         {/* Headline */}
         <div className="text-center">
           <h1 className="text-[34px] font-extrabold text-gray-900 tracking-tight leading-none">
-            $750 Apple Cash
+            {T.headline}
           </h1>
           <p className="mt-2 text-gray-500 text-[15px]">
-            Complete simple tasks &amp; get rewarded instantly
+            {T.subheadline}
           </p>
         </div>
 
         {/* Live badge */}
-        <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-full px-4 py-1.5">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-green-700 text-xs font-semibold">Rewards being claimed right now</span>
+        <div
+          className="flex items-center gap-2 rounded-full px-4 py-1.5 border"
+          style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder }}
+        >
+          <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: T.badgeDot }} />
+          <span className="text-xs font-semibold" style={{ color: T.badgeText }}>
+            Rewards being claimed right now
+          </span>
         </div>
 
         {/* CTA */}
@@ -126,30 +147,51 @@ export default function Offer() {
           href={OFFER_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="pulse-btn block w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-colors"
+          className="pulse-btn block w-full text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-opacity active:opacity-80"
+          style={{ backgroundColor: T.primary }}
         >
-          Claim My $750 Now →
+          {T.ctaText}
         </a>
 
         {/* How It Works */}
         <div className="w-full">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">How It Works</p>
+          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">
+            How It Works
+          </p>
           <div className="flex flex-col gap-3">
             <Step number={1} title="Enter your email address" subtitle="For notifications & to receive rewards" />
             <Step number={2} title="Complete 2–3 simple offers" subtitle="The more you do, the more you earn" />
-            <Step number={3} title="Receive your Apple Pay reward" subtitle="Sent directly to your account" />
+            <Step number={3} title="Receive your reward" subtitle="Sent directly to your account" />
+          </div>
+        </div>
+
+        {/* Spots remaining box */}
+        <div
+          className="w-full rounded-2xl px-5 py-4 border"
+          style={{ backgroundColor: T.spotsBg, borderColor: T.spotsBorder }}
+        >
+          <div className="flex items-start gap-3">
+            <span className="text-xl mt-0.5">⚠️</span>
+            <div>
+              <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>
+                Limited spots remaining
+              </p>
+              <p className="text-gray-500 text-[13px] mt-0.5 leading-snug">
+                Complete 2 quick steps after sign in to lock in your bonus reward before it expires.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Footer */}
         <div className="w-full border-t border-gray-100 pt-4 text-center">
           <p className="text-[11px] text-gray-400 leading-relaxed">
-            Not affiliated with Apple Inc., TikTok, or Meta (Facebook/Instagram).<br />Apple Cash is a trademark of Apple Inc.
+            {T.disclaimer}
           </p>
           <div className="mt-2 flex justify-center gap-4 text-[11px] text-gray-500 font-medium">
-            <a href={`${base}/terms`} className="hover:underline">Terms</a>
+            <a href={`${lbase}/terms`} className="hover:underline">Terms</a>
             <span className="text-gray-300">·</span>
-            <a href={`${base}/privacy`} className="hover:underline">Privacy</a>
+            <a href={`${lbase}/privacy`} className="hover:underline">Privacy</a>
           </div>
         </div>
       </div>
@@ -178,7 +220,10 @@ export default function Offer() {
 function Step({ number, title, subtitle }: { number: number; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-4">
-      <div className="w-9 h-9 rounded-full bg-black text-white font-bold text-[15px] flex items-center justify-center flex-shrink-0 shadow-sm">
+      <div
+        className="w-9 h-9 rounded-full text-white font-bold text-[15px] flex items-center justify-center flex-shrink-0 shadow-sm"
+        style={{ backgroundColor: T.primary }}
+      >
         {number}
       </div>
       <div className="min-w-0">

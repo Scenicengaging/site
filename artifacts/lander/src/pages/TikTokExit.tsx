@@ -1,3 +1,5 @@
+import { T } from "@/config";
+
 export default function TikTokExit() {
   function handleContinue() {
     const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -28,19 +30,26 @@ export default function TikTokExit() {
     }
   }
 
+  const base = import.meta.env.BASE_URL;
+
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm flex flex-col items-center gap-7">
 
-        {/* Card preview */}
+        {/* Hero image */}
         <div className="relative">
-          <div className="absolute inset-0 bg-black/10 rounded-3xl blur-xl scale-95 translate-y-3" />
-          <img
-            src={`${import.meta.env.BASE_URL}apple-cash.png`}
-            alt="$750 Apple Cash"
-            className="relative w-64 max-w-[80vw] rounded-3xl shadow-2xl"
-          />
-          <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+          <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-3xl blur-xl scale-95 translate-y-3`} />
+          <div className={T.heroWhiteBg ? "relative bg-white rounded-3xl shadow-2xl p-6 w-64 max-w-[80vw] flex items-center justify-center" : "relative"}>
+            <img
+              src={`${base}${T.heroImage}`}
+              alt={T.heroAlt}
+              className={T.heroWhiteBg ? "w-full h-auto" : "w-64 max-w-[80vw] rounded-3xl shadow-2xl"}
+            />
+          </div>
+          <div
+            className="absolute -top-2 -right-2 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md"
+            style={{ backgroundColor: T.badgeDot }}
+          >
             Reserved ✓
           </div>
         </div>
@@ -48,7 +57,7 @@ export default function TikTokExit() {
         {/* Text */}
         <div className="text-center">
           <h1 className="text-[28px] font-extrabold text-gray-900 leading-tight tracking-tight">
-            Your $750 reward is<br />waiting for you
+            {T.exitHeadline[0]}<br />{T.exitHeadline[1]}
           </h1>
           <p className="mt-3 text-gray-500 text-[15px] leading-relaxed">
             Open in Safari or Chrome to claim it — some features don't work inside TikTok's browser.
@@ -56,10 +65,13 @@ export default function TikTokExit() {
         </div>
 
         {/* Reward badge */}
-        <div className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-4 flex items-center gap-3">
+        <div
+          className="w-full rounded-2xl px-5 py-4 flex items-center gap-3 border"
+          style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder }}
+        >
           <span className="text-2xl">🎁</span>
           <div>
-            <p className="text-gray-900 font-semibold text-sm">$750 Apple Cash</p>
+            <p className="text-gray-900 font-semibold text-sm">{T.exitBadgeLabel}</p>
             <p className="text-gray-400 text-xs">Complete simple tasks to claim</p>
           </div>
         </div>
@@ -67,7 +79,8 @@ export default function TikTokExit() {
         {/* Button */}
         <button
           onClick={handleContinue}
-          className="pulse-btn w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[17px] py-5 rounded-2xl shadow-lg transition-colors"
+          className="pulse-btn w-full text-white font-bold text-[17px] py-5 rounded-2xl shadow-lg transition-opacity active:opacity-80"
+          style={{ backgroundColor: T.primary }}
         >
           Continue to Claim →
         </button>

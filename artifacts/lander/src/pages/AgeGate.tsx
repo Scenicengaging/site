@@ -1,27 +1,35 @@
 import { useLocation } from "wouter";
+import { T } from "@/config";
 
 export default function AgeGate() {
   const [, navigate] = useLocation();
   function proceed() { navigate("/offer"); }
 
+  const base = import.meta.env.BASE_URL;
+
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 py-12">
       <div className="w-full max-w-sm flex flex-col items-center gap-7">
 
-        {/* Card */}
+        {/* Hero image */}
         <div className="relative">
-          <div className="absolute inset-0 bg-black/10 rounded-3xl blur-xl scale-95 translate-y-3" />
-          <img
-            src={`${import.meta.env.BASE_URL}apple-cash.png`}
-            alt="$750 Apple Cash"
-            className="relative w-56 max-w-[75vw] rounded-2xl shadow-2xl"
-          />
+          <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-3xl blur-xl scale-95 translate-y-3`} />
+          <div className={T.heroWhiteBg ? "relative bg-white rounded-2xl shadow-2xl p-5 w-56 max-w-[75vw] flex items-center justify-center" : "relative"}>
+            <img
+              src={`${base}${T.heroImage}`}
+              alt={T.heroAlt}
+              className={T.heroWhiteBg ? "w-full h-auto" : "w-56 max-w-[75vw] rounded-2xl shadow-2xl"}
+            />
+          </div>
         </div>
 
         {/* Headline */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse inline-block" />
+          <div
+            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full mb-3 border"
+            style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder, color: T.badgeText }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse inline-block" style={{ backgroundColor: T.badgeDot }} />
             Reward Available Now
           </div>
           <h1 className="text-[30px] font-extrabold text-gray-900 leading-tight tracking-tight">
@@ -36,7 +44,8 @@ export default function AgeGate() {
         <div className="w-full flex flex-col gap-3">
           <button
             onClick={proceed}
-            className="w-full bg-black hover:bg-gray-900 active:bg-gray-800 text-white font-bold text-[17px] py-5 rounded-2xl shadow-md transition-colors"
+            className="w-full text-white font-bold text-[17px] py-5 rounded-2xl shadow-md transition-opacity active:opacity-80"
+            style={{ backgroundColor: T.primary }}
           >
             Yes, I'm 21 or Older ✓
           </button>
