@@ -1,1 +1,5 @@
+# Static assets — never rewrite these, serve them directly
+/assets/* /assets/:splat 200
+
+# SPA fallback — everything else serves index.html
 /* /index.html 200

@@ -1,0 +1,10 @@
+# Ensure correct MIME types for JS modules (belt-and-suspenders for Cloudflare Pages)
+/assets/*.js
+  Content-Type: application/javascript; charset=utf-8
+
+/assets/*.css
+  Content-Type: text/css; charset=utf-8
+
+# Allow Cloudflare Web Analytics beacon (prevents the CORS console error)
+/cdn-cgi/*
+  Access-Control-Allow-Origin: *
