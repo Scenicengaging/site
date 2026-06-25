@@ -5,6 +5,22 @@
 export const THEME = "shein" as "apple" | "shein" | "amazon" | "walmart" | "cashapp";
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  FEATURE FLAGS — set any to false to hide it from the page
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export const FEATURES = {
+  timerBar:               true,  // Countdown bar at the very top
+  stepProgress:           true,  // "Step 2 of 3" progress indicator
+  socialProof:            true,  // "$XXX,XXX earned this week" banner
+  liveBadge:              true,  // "Rewards being claimed right now" pill
+  notificationToasts:     true,  // Pop-up activity toasts every 45 s
+  rewardCalculator:       true,  // Spend → earn slider
+  faqSection:             true,  // Collapsible FAQ accordion
+  spotsCounter:           true,  // "Limited spots remaining" urgency box
+  stickyCtaBtn:           true,  // Sticky CTA that appears on scroll
+  processingInterstitial: true,  // "Reserving your spot…" overlay on click
+};
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  AFFILIATE LINK — one place to change the offer URL everywhere
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const OFFER_URL = "https://example.com/offer";

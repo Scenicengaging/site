@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { T } from "@/config";
+import { T, FEATURES } from "@/config";
 import { useOfferUrl } from "@/useOfferUrl";
 
 const COOKIE_KEY = "lander_timer_end";
@@ -153,6 +153,7 @@ export default function Offer() {
 
   // Timer
   useEffect(() => {
+    if (!FEATURES.timerBar) return;
     timerEndRef.current = getTimerEnd();
     const tick = () => setTimeLeft(Math.max(0, timerEndRef.current - Date.now()));
     tick();
@@ -162,6 +163,7 @@ export default function Offer() {
 
   // Spots
   useEffect(() => {
+    if (!FEATURES.spotsCounter) return;
     const initial = getSpots();
     spotsRef.current = initial;
     setSpots(initial.count);
@@ -179,6 +181,7 @@ export default function Offer() {
 
   // Earned counter
   useEffect(() => {
+    if (!FEATURES.socialProof) return;
     const initial = getEarned();
     earnedRef.current = initial;
     setEarned(initial.amount);
@@ -197,6 +200,7 @@ export default function Offer() {
 
   // Sticky CTA observer
   useEffect(() => {
+    if (!FEATURES.stickyCtaBtn) return;
     const el = mainCtaRef.current;
     if (!el) return;
     const obs = new IntersectionObserver(([entry]) => setStickyBtn(!entry.isIntersecting), { threshold: 0 });
@@ -206,6 +210,7 @@ export default function Offer() {
 
   // Notification toasts
   useEffect(() => {
+    if (!FEATURES.notificationToasts) return;
     function show() {
       const id = ++notifIdRef.current;
       setNotif({ id, text: randomMessage(), visible: true });
@@ -222,8 +227,10 @@ export default function Offer() {
   // CTA handler — opens URL immediately (avoids popup blocker), shows interstitial on this tab
   function handleCtaClick() {
     window.open(offerUrl, "_blank", "noopener,noreferrer");
-    setShowInterstitial(true);
-    setTimeout(() => setShowInterstitial(false), 2_800);
+    if (FEATURES.processingInterstitial) {
+      setShowInterstitial(true);
+      setTimeout(() => setShowInterstitial(false), 2_800);
+    }
   }
 
   const base = import.meta.env.BASE_URL;
