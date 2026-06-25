@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import { OFFER_URL, T } from "@/config";
+import { T } from "@/config";
+import { useOfferUrl } from "@/useOfferUrl";
 
 const COOKIE_KEY = "lander_timer_end";
 const SPOTS_COOKIE = "lander_spots";
@@ -137,6 +138,7 @@ interface Notif {
 }
 
 export default function Offer() {
+  const offerUrl = useOfferUrl();
   const [timeLeft, setTimeLeft] = useState(0);
   const timerEndRef = useRef(0);
   const [notif, setNotif] = useState<Notif | null>(null);
@@ -273,7 +275,7 @@ export default function Offer() {
         {/* CTA */}
         <a
           ref={mainCtaRef}
-          href={OFFER_URL}
+          href={offerUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="pulse-btn block w-full text-white font-bold text-[18px] py-5 rounded-2xl shadow-xl text-center transition-opacity active:opacity-80"
@@ -363,7 +365,7 @@ export default function Offer() {
         }}
       >
         <a
-          href={OFFER_URL}
+          href={offerUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full max-w-sm mx-auto text-white font-bold text-[17px] py-4 rounded-2xl shadow-xl text-center transition-opacity active:opacity-80"
