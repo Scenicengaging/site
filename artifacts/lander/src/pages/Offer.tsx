@@ -156,7 +156,6 @@ export default function Offer() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center px-5 pt-0 pb-8">
-
       {/* Timer bar */}
       <div
         className="w-full text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2 -mx-5 mb-6"
@@ -168,7 +167,6 @@ export default function Offer() {
           {formatTime(timeLeft)}
         </span>
       </div>
-
       <div className="w-full max-w-sm flex flex-col items-center gap-6">
 
         {/* Hero image */}
@@ -177,7 +175,7 @@ export default function Offer() {
             <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-[28px] blur-2xl scale-95 translate-y-4`} />
           )}
           {T.heroWhiteBg ? (
-            <div className="relative bg-white rounded-[22px] shadow-2xl p-8 flex items-center justify-center">
+            <div className="relative bg-white rounded-[22px] shadow-2xl p-8 flex items-center justify-center rounded-tl-[22px] rounded-tr-[22px] rounded-br-[22px] rounded-bl-[22px] border-t-[color:var(--color-gray-900)] border-r-[color:var(--color-gray-900)] border-b-[color:var(--color-gray-900)] border-l-[color:var(--color-gray-900)]">
               <img
                 src={`${base}${T.heroImage}`}
                 alt={T.heroAlt}
@@ -278,7 +276,6 @@ export default function Offer() {
           </div>
         </div>
       </div>
-
       {/* Sticky CTA — appears when main button scrolls out of view */}
       <div
         className="fixed bottom-0 left-0 right-0 z-40 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 bg-white/95 backdrop-blur border-t border-gray-100 transition-all duration-300"
@@ -297,7 +294,6 @@ export default function Offer() {
           {T.ctaText}
         </a>
       </div>
-
       {/* Notification toast */}
       {notif && (
         <div
