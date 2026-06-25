@@ -222,6 +222,45 @@ export default function Offer() {
           {formatTime(timeLeft)}
         </span>
       </div>
+      {/* Step progress */}
+      <div className="w-full max-w-sm flex items-center gap-0 mb-2">
+        {/* Step 1 — done */}
+        <div className="flex flex-col items-center gap-1 flex-1">
+          <div
+            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold"
+            style={{ backgroundColor: T.primary }}
+          >
+            ✓
+          </div>
+          <span className="text-[10px] font-medium text-gray-400">Verify Age</span>
+        </div>
+
+        {/* Connector */}
+        <div className="h-[2px] flex-1 mb-4" style={{ backgroundColor: T.primary }} />
+
+        {/* Step 2 — current */}
+        <div className="flex flex-col items-center gap-1 flex-1">
+          <div
+            className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold ring-4"
+            style={{ backgroundColor: T.primary, ringColor: `${T.primary}33` }}
+          >
+            2
+          </div>
+          <span className="text-[10px] font-bold" style={{ color: T.primary }}>Claim Offer</span>
+        </div>
+
+        {/* Connector */}
+        <div className="h-[2px] flex-1 mb-4 bg-gray-200" />
+
+        {/* Step 3 — upcoming */}
+        <div className="flex flex-col items-center gap-1 flex-1">
+          <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 text-[12px] font-bold bg-gray-100">
+            3
+          </div>
+          <span className="text-[10px] font-medium text-gray-400">Get Rewarded</span>
+        </div>
+      </div>
+
       <div className="w-full max-w-sm flex flex-col items-center gap-6">
         {/* Hero image */}
         <div className="relative w-full">
