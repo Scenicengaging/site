@@ -14,7 +14,10 @@ function getSpots(): { count: number; nextTick: number } {
   if (raw) {
     try {
       const parsed = JSON.parse(decodeURIComponent(raw));
-      if (typeof parsed.count === "number" && typeof parsed.nextTick === "number") {
+      if (
+        typeof parsed.count === "number" &&
+        typeof parsed.nextTick === "number"
+      ) {
         // Apply any ticks that elapsed while page was closed
         const now = Date.now();
         let { count, nextTick } = parsed;
@@ -38,12 +41,53 @@ function saveSpots(count: number, nextTick: number) {
 }
 
 const FIRST_NAMES = [
-  "Ashley","Brandon","Christina","Derek","Emma","Frank","Grace","Henry",
-  "Isabella","Jake","Karen","Liam","Mia","Nathan","Olivia","Patrick",
-  "Quinn","Rachel","Samuel","Tiffany","Ulysses","Victoria","William",
-  "Xena","Yvonne","Zachary","Amber","Brett","Cassidy","Dylan","Elena",
-  "Felix","Gianna","Harold","Iris","Jordan","Kelsey","Logan","Madison",
-  "Noah","Paige","Ryan","Savannah","Tyler","Uma","Vanessa","Wesley",
+  "Ashley",
+  "Brandon",
+  "Christina",
+  "Derek",
+  "Emma",
+  "Frank",
+  "Grace",
+  "Henry",
+  "Isabella",
+  "Jake",
+  "Karen",
+  "Liam",
+  "Mia",
+  "Nathan",
+  "Olivia",
+  "Patrick",
+  "Quinn",
+  "Rachel",
+  "Samuel",
+  "Tiffany",
+  "Ulysses",
+  "Victoria",
+  "William",
+  "Xena",
+  "Yvonne",
+  "Zachary",
+  "Amber",
+  "Brett",
+  "Cassidy",
+  "Dylan",
+  "Elena",
+  "Felix",
+  "Gianna",
+  "Harold",
+  "Iris",
+  "Jordan",
+  "Kelsey",
+  "Logan",
+  "Madison",
+  "Noah",
+  "Paige",
+  "Ryan",
+  "Savannah",
+  "Tyler",
+  "Uma",
+  "Vanessa",
+  "Wesley",
 ];
 const LAST_INITIALS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const MESSAGES = [
@@ -73,7 +117,8 @@ function getTimerEnd(): number {
   }
   const minSec = 14 * 60 + 12;
   const maxSec = 14 * 60 + 48;
-  const startSeconds = Math.floor(Math.random() * (maxSec - minSec + 1)) + minSec;
+  const startSeconds =
+    Math.floor(Math.random() * (maxSec - minSec + 1)) + minSec;
   const endTs = Date.now() + startSeconds * 1000;
   document.cookie = `${COOKIE_KEY}=${endTs}; path=/; max-age=${7 * 24 * 3600}`;
   return endTs;
@@ -85,7 +130,11 @@ function formatTime(ms: number) {
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
 
-interface Notif { id: number; text: string; visible: boolean; }
+interface Notif {
+  id: number;
+  text: string;
+  visible: boolean;
+}
 
 export default function Offer() {
   const [timeLeft, setTimeLeft] = useState(0);
@@ -99,7 +148,8 @@ export default function Offer() {
 
   useEffect(() => {
     timerEndRef.current = getTimerEnd();
-    const tick = () => setTimeLeft(Math.max(0, timerEndRef.current - Date.now()));
+    const tick = () =>
+      setTimeLeft(Math.max(0, timerEndRef.current - Date.now()));
     tick();
     const id = setInterval(tick, 500);
     return () => clearInterval(id);
@@ -131,7 +181,7 @@ export default function Offer() {
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => setStickyBtn(!entry.isIntersecting),
-      { threshold: 0 }
+      { threshold: 0 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -142,8 +192,8 @@ export default function Offer() {
       const id = ++notifIdRef.current;
       setNotif({ id, text: randomMessage(), visible: true });
       setTimeout(() => {
-        setNotif((p) => p?.id === id ? { ...p, visible: false } : p);
-        setTimeout(() => setNotif((p) => p?.id === id ? null : p), 500);
+        setNotif((p) => (p?.id === id ? { ...p, visible: false } : p));
+        setTimeout(() => setNotif((p) => (p?.id === id ? null : p)), 500);
       }, 4500);
     }
     show();
@@ -163,19 +213,23 @@ export default function Offer() {
       >
         <span>⏱</span>
         <span>Offer expires in</span>
-        <span className="font-bold tabular-nums text-[14px]" style={{ color: T.timerCountdown }}>
+        <span
+          className="font-bold tabular-nums text-[14px]"
+          style={{ color: T.timerCountdown }}
+        >
           {formatTime(timeLeft)}
         </span>
       </div>
       <div className="w-full max-w-sm flex flex-col items-center gap-6">
-
         {/* Hero image */}
         <div className="relative w-full">
           {!T.heroWhiteBg && (
-            <div className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-[28px] blur-2xl scale-95 translate-y-4`} />
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${T.cardGlow} rounded-[28px] blur-2xl scale-95 translate-y-4`}
+            />
           )}
           {T.heroWhiteBg ? (
-            <div className="relative bg-white rounded-[22px] shadow-2xl p-8 flex items-center justify-center rounded-tl-[22px] rounded-tr-[22px] rounded-br-[22px] rounded-bl-[22px] border-t-[color:var(--color-gray-900)] border-r-[color:var(--color-gray-900)] border-b-[color:var(--color-gray-900)] border-l-[color:var(--color-gray-900)]">
+            <div className="relative bg-white rounded-[22px] p-8 flex items-center justify-center rounded-tl-[22px] rounded-tr-[22px] rounded-br-[22px] rounded-bl-[22px]]">
               <img
                 src={`${base}${T.heroImage}`}
                 alt={T.heroAlt}
@@ -196,9 +250,7 @@ export default function Offer() {
           <h1 className="text-[34px] font-extrabold text-gray-900 tracking-tight leading-none">
             {T.headline}
           </h1>
-          <p className="mt-2 text-gray-500 text-[15px]">
-            {T.subheadline}
-          </p>
+          <p className="mt-2 text-gray-500 text-[15px]">{T.subheadline}</p>
         </div>
 
         {/* Live badge */}
@@ -206,8 +258,14 @@ export default function Offer() {
           className="flex items-center gap-2 rounded-full px-4 py-1.5 border"
           style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder }}
         >
-          <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: T.badgeDot }} />
-          <span className="text-xs font-semibold" style={{ color: T.badgeText }}>
+          <span
+            className="w-2 h-2 rounded-full animate-pulse"
+            style={{ backgroundColor: T.badgeDot }}
+          />
+          <span
+            className="text-xs font-semibold"
+            style={{ color: T.badgeText }}
+          >
             Rewards being claimed right now
           </span>
         </div>
@@ -230,9 +288,21 @@ export default function Offer() {
             How It Works
           </p>
           <div className="flex flex-col gap-3">
-            <Step number={1} title="Enter your email address" subtitle="For notifications & to receive rewards" />
-            <Step number={2} title="Complete 2–3 simple offers" subtitle="The more you do, the more you earn" />
-            <Step number={3} title="Receive your reward" subtitle="Sent directly to your account" />
+            <Step
+              number={1}
+              title="Enter your email address"
+              subtitle="For notifications & to receive rewards"
+            />
+            <Step
+              number={2}
+              title="Complete 2–3 simple offers"
+              subtitle="The more you do, the more you earn"
+            />
+            <Step
+              number={3}
+              title="Receive your reward"
+              subtitle="Sent directly to your account"
+            />
           </div>
         </div>
 
@@ -245,7 +315,10 @@ export default function Offer() {
             <span className="text-xl mt-0.5">⚠️</span>
             <div className="flex-1">
               <div className="flex items-center justify-between gap-2">
-                <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>
+                <p
+                  className="font-bold text-[14px]"
+                  style={{ color: T.spotsText }}
+                >
                   Limited spots remaining
                 </p>
                 {spots > 0 && (
@@ -258,7 +331,8 @@ export default function Offer() {
                 )}
               </div>
               <p className="text-gray-500 text-[13px] mt-1 leading-snug">
-                Complete 2 quick steps after sign in to lock in your bonus reward before it expires.
+                Complete 2 quick steps after sign in to lock in your bonus
+                reward before it expires.
               </p>
             </div>
           </div>
@@ -270,9 +344,13 @@ export default function Offer() {
             {T.disclaimer}
           </p>
           <div className="mt-2 flex justify-center gap-4 text-[11px] text-gray-500 font-medium">
-            <a href={`${lbase}/terms`} className="hover:underline">Terms</a>
+            <a href={`${lbase}/terms`} className="hover:underline">
+              Terms
+            </a>
             <span className="text-gray-300">·</span>
-            <a href={`${lbase}/privacy`} className="hover:underline">Privacy</a>
+            <a href={`${lbase}/privacy`} className="hover:underline">
+              Privacy
+            </a>
           </div>
         </div>
       </div>
@@ -301,12 +379,24 @@ export default function Offer() {
           className={`fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white border border-gray-200 rounded-2xl shadow-2xl px-4 py-3 flex items-center gap-3 z-50 ${notif.visible ? "notif-enter" : "notif-exit"}`}
         >
           <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            <svg
+              className="w-4 h-4 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2.5}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           </div>
           <div className="min-w-0">
-            <p className="text-gray-800 text-[13px] font-semibold leading-snug">{notif.text}</p>
+            <p className="text-gray-800 text-[13px] font-semibold leading-snug">
+              {notif.text}
+            </p>
             <p className="text-gray-400 text-[11px] mt-0.5">45 seconds ago</p>
           </div>
         </div>
@@ -315,7 +405,15 @@ export default function Offer() {
   );
 }
 
-function Step({ number, title, subtitle }: { number: number; title: string; subtitle: string }) {
+function Step({
+  number,
+  title,
+  subtitle,
+}: {
+  number: number;
+  title: string;
+  subtitle: string;
+}) {
   return (
     <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-4">
       <div
@@ -325,7 +423,9 @@ function Step({ number, title, subtitle }: { number: number; title: string; subt
         {number}
       </div>
       <div className="min-w-0">
-        <p className="text-gray-900 font-semibold text-[14px] leading-snug">{title}</p>
+        <p className="text-gray-900 font-semibold text-[14px] leading-snug">
+          {title}
+        </p>
         <p className="text-gray-400 text-[12px] mt-0.5">{subtitle}</p>
       </div>
     </div>
