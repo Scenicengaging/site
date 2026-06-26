@@ -260,34 +260,38 @@ export default function Offer() {
       )}
 
       {/* Timer bar */}
-      <div
-        className="w-full text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2 -mx-5 mb-6"
-        style={{ width: "calc(100% + 2.5rem)", backgroundColor: T.timerBg }}
-      >
-        <span>⏱</span>
-        <span>Offer expires in</span>
-        <span className="font-bold tabular-nums text-[14px]" style={{ color: T.timerCountdown }}>
-          {formatTime(timeLeft)}
-        </span>
-      </div>
+      {FEATURES.timerBar && (
+        <div
+          className="w-full text-white text-center py-2.5 text-[13px] font-semibold tracking-wide flex items-center justify-center gap-2 -mx-5 mb-6"
+          style={{ width: "calc(100% + 2.5rem)", backgroundColor: T.timerBg }}
+        >
+          <span>⏱</span>
+          <span>Offer expires in</span>
+          <span className="font-bold tabular-nums text-[14px]" style={{ color: T.timerCountdown }}>
+            {formatTime(timeLeft)}
+          </span>
+        </div>
+      )}
 
       {/* Step progress */}
-      <div className="w-full max-w-sm flex items-center gap-0 mb-2">
-        <div className="flex flex-col items-center gap-1 flex-1">
-          <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold" style={{ backgroundColor: T.primary }}>✓</div>
-          <span className="text-[10px] font-medium text-gray-400">Verify Age</span>
+      {FEATURES.stepProgress && (
+        <div className="w-full max-w-sm flex items-center gap-0 mb-2">
+          <div className="flex flex-col items-center gap-1 flex-1">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold" style={{ backgroundColor: T.primary }}>✓</div>
+            <span className="text-[10px] font-medium text-gray-400">Verify Age</span>
+          </div>
+          <div className="h-[2px] flex-1 mb-4" style={{ backgroundColor: T.primary }} />
+          <div className="flex flex-col items-center gap-1 flex-1">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold" style={{ backgroundColor: T.primary }}>2</div>
+            <span className="text-[10px] font-bold" style={{ color: T.primary }}>Claim Offer</span>
+          </div>
+          <div className="h-[2px] flex-1 mb-4 bg-gray-200" />
+          <div className="flex flex-col items-center gap-1 flex-1">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 text-[12px] font-bold bg-gray-100">3</div>
+            <span className="text-[10px] font-medium text-gray-400">Get Rewarded</span>
+          </div>
         </div>
-        <div className="h-[2px] flex-1 mb-4" style={{ backgroundColor: T.primary }} />
-        <div className="flex flex-col items-center gap-1 flex-1">
-          <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold" style={{ backgroundColor: T.primary }}>2</div>
-          <span className="text-[10px] font-bold" style={{ color: T.primary }}>Claim Offer</span>
-        </div>
-        <div className="h-[2px] flex-1 mb-4 bg-gray-200" />
-        <div className="flex flex-col items-center gap-1 flex-1">
-          <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 text-[12px] font-bold bg-gray-100">3</div>
-          <span className="text-[10px] font-medium text-gray-400">Get Rewarded</span>
-        </div>
-      </div>
+      )}
 
       <div className="w-full max-w-sm flex flex-col items-center gap-6">
 
@@ -306,7 +310,7 @@ export default function Offer() {
         </div>
 
         {/* Social proof total */}
-        {earned > 0 && (
+        {FEATURES.socialProof && earned > 0 && (
           <div
             className="w-full flex items-center justify-center gap-2 rounded-2xl py-3 px-4 border"
             style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder }}
@@ -326,10 +330,12 @@ export default function Offer() {
         </div>
 
         {/* Live badge */}
-        <div className="flex items-center gap-2 rounded-full px-4 py-1.5 border" style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder }}>
-          <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: T.badgeDot }} />
-          <span className="text-xs font-semibold" style={{ color: T.badgeText }}>Rewards being claimed right now</span>
-        </div>
+        {FEATURES.liveBadge && (
+          <div className="flex items-center gap-2 rounded-full px-4 py-1.5 border" style={{ backgroundColor: T.badgeBg, borderColor: T.badgeBorder }}>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: T.badgeDot }} />
+            <span className="text-xs font-semibold" style={{ color: T.badgeText }}>Rewards being claimed right now</span>
+          </div>
+        )}
 
         {/* CTA */}
         <div ref={mainCtaRef} className="w-full">
@@ -353,95 +359,100 @@ export default function Offer() {
         </div>
 
         {/* Reward Calculator */}
-        <div className="w-full rounded-2xl border border-gray-100 bg-gray-50 px-5 py-5">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-1">Reward Calculator</p>
-          <p className="text-[12px] text-gray-400 text-center mb-5">Slide to see how much you can earn</p>
+        {FEATURES.rewardCalculator && (
+          <div className="w-full rounded-2xl border border-gray-100 bg-gray-50 px-5 py-5">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-1">Reward Calculator</p>
+            <p className="text-[12px] text-gray-400 text-center mb-5">Slide to see how much you can earn</p>
 
-          {/* Earn display */}
-          <div className="text-center mb-5">
-            <p className="text-[13px] text-gray-500 mb-0.5">You could earn up to</p>
-            <p className="text-[42px] font-extrabold tabular-nums leading-none" style={{ color: T.primary }}>
-              ${Math.round(50 + (spendAmount / 200) * 700).toLocaleString("en-US")}
-            </p>
-            <p className="text-[12px] text-gray-400 mt-1">
-              {spendAmount === 0
-                ? "completing free offers only"
-                : `by investing $${spendAmount} in sponsored deals`}
-            </p>
-          </div>
-
-          {/* Slider */}
-          <div className="relative">
-            <input
-              type="range"
-              min={0}
-              max={200}
-              step={5}
-              value={spendAmount}
-              onChange={(e) => setSpendAmount(Number(e.target.value))}
-              className="reward-slider w-full h-2 rounded-full appearance-none cursor-pointer"
-              style={{
-                background: `linear-gradient(to right, ${T.primary} 0%, ${T.primary} ${(spendAmount / 200) * 100}%, #e5e7eb ${(spendAmount / 200) * 100}%, #e5e7eb 100%)`,
-              }}
-            />
-            <div className="flex justify-between mt-2 text-[11px] text-gray-400">
-              <span>$0</span>
-              <span>$50</span>
-              <span>$100</span>
-              <span>$150</span>
-              <span>$200</span>
-            </div>
-          </div>
-
-        </div>
-
-        {/* FAQ */}
-        <div className="w-full">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">Frequently Asked Questions</p>
-          <div className="flex flex-col gap-2">
-            {FAQS.map((faq, i) => (
-              <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left bg-gray-50 active:bg-gray-100 transition-colors"
-                >
-                  <span className="font-semibold text-[14px] text-gray-800 leading-snug">{faq.q}</span>
-                  <span
-                    className="text-gray-400 text-[20px] font-light flex-shrink-0 transition-transform duration-200 leading-none"
-                    style={{ transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)" }}
-                  >
-                    +
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-5 pt-2 bg-white">
-                    <p className="text-[13px] text-gray-500 leading-relaxed">{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Spots remaining — below FAQ */}
-        <div className="w-full rounded-2xl px-5 py-4 border" style={{ backgroundColor: T.spotsBg, borderColor: T.spotsBorder }}>
-          <div className="flex items-start gap-3">
-            <span className="text-xl mt-0.5">⚠️</span>
-            <div className="flex-1">
-              <div className="flex items-center justify-between gap-2 flex-wrap">
-                <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>Limited spots remaining</p>
-                {spots > 0 && (
-                  <span className="text-white text-[12px] font-extrabold px-2.5 py-0.5 rounded-full tabular-nums" style={{ backgroundColor: T.badgeDot }}>
-                    Only {spots} left
-                  </span>
-                )}
-              </div>
-              <p className="text-gray-500 text-[13px] mt-1 leading-snug">
-                Complete 2 quick steps after sign in to lock in your bonus reward before it expires.
+            {/* Earn display */}
+            <div className="text-center mb-5">
+              <p className="text-[13px] text-gray-500 mb-0.5">You could earn up to</p>
+              <p className="text-[42px] font-extrabold tabular-nums leading-none" style={{ color: T.primary }}>
+                ${Math.round(50 + (spendAmount / 200) * 700).toLocaleString("en-US")}
+              </p>
+              <p className="text-[12px] text-gray-400 mt-1">
+                {spendAmount === 0
+                  ? "completing free offers only"
+                  : `by investing $${spendAmount} in sponsored deals`}
               </p>
             </div>
+
+            {/* Slider */}
+            <div className="relative">
+              <input
+                type="range"
+                min={0}
+                max={200}
+                step={5}
+                value={spendAmount}
+                onChange={(e) => setSpendAmount(Number(e.target.value))}
+                className="reward-slider w-full h-2 rounded-full appearance-none cursor-pointer"
+                style={{
+                  background: `linear-gradient(to right, ${T.primary} 0%, ${T.primary} ${(spendAmount / 200) * 100}%, #e5e7eb ${(spendAmount / 200) * 100}%, #e5e7eb 100%)`,
+                }}
+              />
+              <div className="flex justify-between mt-2 text-[11px] text-gray-400">
+                <span>$0</span>
+                <span>$50</span>
+                <span>$100</span>
+                <span>$150</span>
+                <span>$200</span>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* FAQ */}
+        {FEATURES.faqSection && (
+          <div className="w-full">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">Frequently Asked Questions</p>
+            <div className="flex flex-col gap-2">
+              {FAQS.map((faq, i) => (
+                <div key={i} className="border border-gray-100 rounded-2xl overflow-hidden">
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left bg-gray-50 active:bg-gray-100 transition-colors"
+                  >
+                    <span className="font-semibold text-[14px] text-gray-800 leading-snug">{faq.q}</span>
+                    <span
+                      className="text-gray-400 text-[20px] font-light flex-shrink-0 transition-transform duration-200 leading-none"
+                      style={{ transform: openFaq === i ? "rotate(45deg)" : "rotate(0deg)" }}
+                    >
+                      +
+                    </span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="px-5 pb-5 pt-2 bg-white">
+                      <p className="text-[13px] text-gray-500 leading-relaxed">{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Spots remaining — below FAQ */}
+        {FEATURES.spotsCounter && (
+          <div className="w-full rounded-2xl px-5 py-4 border" style={{ backgroundColor: T.spotsBg, borderColor: T.spotsBorder }}>
+            <div className="flex items-start gap-3">
+              <span className="text-xl mt-0.5">⚠️</span>
+              <div className="flex-1">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <p className="font-bold text-[14px]" style={{ color: T.spotsText }}>Limited spots remaining</p>
+                  {spots > 0 && (
+                    <span className="text-white text-[12px] font-extrabold px-2.5 py-0.5 rounded-full tabular-nums" style={{ backgroundColor: T.badgeDot }}>
+                      Only {spots} left
+                    </span>
+                  )}
+                </div>
+                <p className="text-gray-500 text-[13px] mt-1 leading-snug">
+                  Complete 2 quick steps after sign in to lock in your bonus reward before it expires.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Footer */}
         <div className="w-full border-t border-gray-100 pt-4 text-center">
@@ -455,21 +466,23 @@ export default function Offer() {
       </div>
 
       {/* Sticky CTA */}
-      <div
-        className="fixed bottom-0 left-0 right-0 z-40 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 bg-white/95 backdrop-blur border-t border-gray-100 transition-all duration-300"
-        style={{ transform: stickyBtn ? "translateY(0)" : "translateY(110%)", pointerEvents: stickyBtn ? "auto" : "none" }}
-      >
-        <button
-          onClick={handleCtaClick}
-          className="block w-full max-w-sm mx-auto text-white font-bold text-[17px] py-4 rounded-2xl shadow-xl text-center transition-opacity active:opacity-80 cursor-pointer border-0"
-          style={{ backgroundColor: T.primary }}
+      {FEATURES.stickyCtaBtn && (
+        <div
+          className="fixed bottom-0 left-0 right-0 z-40 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-3 bg-white/95 backdrop-blur border-t border-gray-100 transition-all duration-300"
+          style={{ transform: stickyBtn ? "translateY(0)" : "translateY(110%)", pointerEvents: stickyBtn ? "auto" : "none" }}
         >
-          {T.ctaText}
-        </button>
-      </div>
+          <button
+            onClick={handleCtaClick}
+            className="block w-full max-w-sm mx-auto text-white font-bold text-[17px] py-4 rounded-2xl shadow-xl text-center transition-opacity active:opacity-80 cursor-pointer border-0"
+            style={{ backgroundColor: T.primary }}
+          >
+            {T.ctaText}
+          </button>
+        </div>
+      )}
 
       {/* Notification toast */}
-      {notif && (
+      {FEATURES.notificationToasts && notif && (
         <div
           key={notif.id}
           className={`fixed bottom-5 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-sm bg-white border border-gray-200 rounded-2xl shadow-2xl px-4 py-3 flex items-center gap-3 z-50 ${notif.visible ? "notif-enter" : "notif-exit"}`}
