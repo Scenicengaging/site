@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
-import { T, FEATURES } from "@/config";
+import { THEMES } from "@/config";
+import { loadAdminConfig } from "@/adminConfig";
 import { useOfferUrl } from "@/useOfferUrl";
 
 const COOKIE_KEY = "lander_timer_end";
@@ -136,7 +137,10 @@ const FAQS = [
 interface Notif { id: number; text: string; visible: boolean; }
 
 export default function Offer() {
-  const offerUrl = useOfferUrl();
+  const [adminCfg] = useState(loadAdminConfig);
+  const FEATURES = adminCfg.features;
+  const T = THEMES[adminCfg.theme];
+  const offerUrl = useOfferUrl(adminCfg.offerUrl);
   const [timeLeft, setTimeLeft] = useState(0);
   const timerEndRef = useRef(0);
   const [notif, setNotif] = useState<Notif | null>(null);
@@ -352,9 +356,9 @@ export default function Offer() {
         <div className="w-full">
           <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 text-center mb-3">How It Works</p>
           <div className="flex flex-col gap-3">
-            <Step number={1} title="Enter your email address" subtitle="For notifications & to receive rewards" />
-            <Step number={2} title="Complete 2–3 simple offers" subtitle="The more you do, the more you earn" />
-            <Step number={3} title="Receive your reward" subtitle="Sent directly to your account" />
+            <Step number={1} title="Enter your email address" subtitle="For notifications & to receive rewards" color={T.primary} />
+            <Step number={2} title="Complete 2–3 simple offers" subtitle="The more you do, the more you earn" color={T.primary} />
+            <Step number={3} title="Receive your reward" subtitle="Sent directly to your account" color={T.primary} />
           </div>
         </div>
 
@@ -502,10 +506,10 @@ export default function Offer() {
   );
 }
 
-function Step({ number, title, subtitle }: { number: number; title: string; subtitle: string }) {
+function Step({ number, title, subtitle, color }: { number: number; title: string; subtitle: string; color: string }) {
   return (
     <div className="flex items-center gap-4 bg-gray-50 rounded-2xl px-4 py-4">
-      <div className="w-9 h-9 rounded-full text-white font-bold text-[15px] flex items-center justify-center flex-shrink-0 shadow-sm" style={{ backgroundColor: T.primary }}>
+      <div className="w-9 h-9 rounded-full text-white font-bold text-[15px] flex items-center justify-center flex-shrink-0 shadow-sm" style={{ backgroundColor: color }}>
         {number}
       </div>
       <div className="min-w-0">

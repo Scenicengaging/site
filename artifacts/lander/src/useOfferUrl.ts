@@ -3,7 +3,8 @@ import { OFFER_URL } from "@/config";
 
 const PASSTHROUGH_PARAMS = ["source", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
 
-export function useOfferUrl(): string {
+export function useOfferUrl(baseUrl?: string): string {
+  const url = baseUrl ?? OFFER_URL;
   return useMemo(() => {
     const incoming = new URLSearchParams(window.location.search);
     const toAppend = new URLSearchParams();
@@ -13,9 +14,9 @@ export function useOfferUrl(): string {
       if (val) toAppend.set(key, val);
     }
 
-    if (!toAppend.size) return OFFER_URL;
+    if (!toAppend.size) return url;
 
-    const separator = OFFER_URL.includes("?") ? "&" : "?";
-    return `${OFFER_URL}${separator}${toAppend.toString()}`;
-  }, []);
+    const separator = url.includes("?") ? "&" : "?";
+    return `${url}${separator}${toAppend.toString()}`;
+  }, [url]);
 }

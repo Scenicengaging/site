@@ -33,7 +33,7 @@ export const EXIT_SLUGS = ["go", "start", "tiktok", "exit"];
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  THEME DEFINITIONS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const themes = {
+export const THEMES = {
   apple: {
     brandName: "Apple Cash",
     rewardLabel: "$750 Apple Cash",
@@ -161,4 +161,4 @@ const themes = {
   },
 } as const;
 
-export const T = themes[THEME];
+export const T = THEMES[THEME];

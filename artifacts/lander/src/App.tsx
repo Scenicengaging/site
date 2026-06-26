@@ -3,6 +3,7 @@ import { EXIT_SLUGS } from "@/config";
 import TikTokExit from "@/pages/TikTokExit";
 import AgeGate from "@/pages/AgeGate";
 import Offer from "@/pages/Offer";
+import Admin from "@/pages/Admin";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
 import NotFound from "@/pages/not-found";
@@ -15,6 +16,7 @@ function Router() {
         <Route key={slug} path={`/${slug}`} component={TikTokExit} />
       ))}
       <Route path="/offer" component={Offer} />
+      <Route path="/admin" component={Admin} />
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
       <Route component={NotFound} />
